@@ -38,11 +38,16 @@ if(NOT TARGET cuttle_generator)
     add_subdirectory(deps/cuttle-generator)
 endif()
 
+set(DEPS_INCLUDE_DIRS
+    "deps/cuttle-parser/src"
+    "deps/cuttle-translator/src"
+    "deps/cuttle-generator/src")
+
 add_library(cuttle_lang SHARED ${SRCS} ${HEADERS})
 add_executable(cuttle_lang_tests ${TEST_SRCS} ${HEADERS} ${TEST_HEADERS} tests/cuttle-test/src/measure.hpp)
 
-target_include_directories(cuttle_lang PRIVATE "src/")
-target_include_directories(cuttle_lang_tests PRIVATE "src/" "tests/" "tests/cuttle-test/src/")
+target_include_directories(cuttle_lang PRIVATE "src/" ${DEPS_INCLUDE_DIRS})
+target_include_directories(cuttle_lang_tests PRIVATE "src/" ${DEPS_INCLUDE_DIRS} "tests/" "tests/cuttle-test/src/")
 
 target_link_libraries(cuttle_lang cuttle_parser)
 target_link_libraries(cuttle_lang cuttle_generator)
