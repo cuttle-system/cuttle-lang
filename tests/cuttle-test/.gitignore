@@ -1,9 +1,0 @@
-/build
-/.vscode/*
-/.vscode
-/.vs
-/.idea
-/cmake-build-debug
-/CMakeSettings.json
-test_file_access.txt
-/CppProperties.json
