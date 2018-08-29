@@ -1,38 +1,48 @@
+#define BOOST_TEST_DYN_LINK
+
+#include "token.hpp"
+#include "token_methods.hpp"
 #include <iostream>
-#include <fstream>
+#include <boost/test/unit_test.hpp>
 #include <string>
-#include "test.hpp"
-#include "test_lang_tokenizer.hpp"
 #include "tokenizer.hpp"
 #include "lang_tokenizer.hpp"
 
 using namespace cuttle;
 
-inline void test_can_tokenize_basic_function_calls() {
-    {
-        tokenizer_config_t config;
-        tokens_t tokens;
+struct config_and_tokens_init_fixture {
+    tokenizer_config_t config;
+    tokens_t tokens;
 
+    void setup() {
         lang::get_tokenizer_config(config);
+    }
+};
 
+BOOST_FIXTURE_TEST_SUITE(can_tokenize_basic_function_calls_suite, config_and_tokens_init_fixture)
+
+    BOOST_AUTO_TEST_CASE(case1) {
         tokenize(config, "foo 5 6", tokens);
 
-        AssertTrue(tokens[0].type == token_type::atom, "element 1 type");
-        AssertTrue(tokens[0].value == "foo", "element 1 value");
-        AssertTrue(tokens[0].line == 1, "element 1 line");
-        AssertTrue(tokens[0].col == 1, "element 1 col");
+        std::cout << token_type::atom;
 
-        AssertTrue(tokens[1].type == token_type::number, "element 2 type");
-        AssertTrue(tokens[1].value == "5", "element 2 value");
-        AssertTrue(tokens[1].line == 1, "element 2 line");
-        AssertTrue(tokens[1].col == 5, "element 2 col");
+        BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[0].value, "foo");
+        BOOST_CHECK_EQUAL(tokens[0].line, 1);
+        BOOST_CHECK_EQUAL(tokens[0].col, 1);
 
-        AssertTrue(tokens[2].type == token_type::number, "element 3 type");
-        AssertTrue(tokens[2].value == "6", "element 3 value");
-        AssertTrue(tokens[2].line == 1, "element 3 line");
-        AssertTrue(tokens[2].col == 7, "element 3 col");
+        BOOST_CHECK_EQUAL(tokens[1].type, token_type::number);
+        BOOST_CHECK_EQUAL(tokens[1].value, "5");
+        BOOST_CHECK_EQUAL(tokens[1].line, 1);
+        BOOST_CHECK_EQUAL(tokens[1].col, 5);
+
+        BOOST_CHECK_EQUAL(tokens[2].type, token_type::number);
+        BOOST_CHECK_EQUAL(tokens[2].value, "6");
+        BOOST_CHECK_EQUAL(tokens[2].line, 1);
+        BOOST_CHECK_EQUAL(tokens[2].col, 7);
     }
-    {
+
+    BOOST_AUTO_TEST_CASE(case2) {
         tokenizer_config_t config;
         tokens_t tokens;
 
@@ -40,22 +50,23 @@ inline void test_can_tokenize_basic_function_calls() {
 
         tokenize(config, "foo '5' 6", tokens);
 
-        AssertTrue(tokens[0].type == token_type::atom, "element 1 type");
-        AssertTrue(tokens[0].value == "foo", "element 1 value");
-        AssertTrue(tokens[0].line == 1, "element 1 line");
-        AssertTrue(tokens[0].col == 1, "element 1 col");
+        BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[0].value, "foo");
+        BOOST_CHECK_EQUAL(tokens[0].line, 1);
+        BOOST_CHECK_EQUAL(tokens[0].col, 1);
 
-        AssertTrue(tokens[1].type == token_type::string, "element 2 type");
-        AssertTrue(tokens[1].value == "5", "element 2 value");
-        AssertTrue(tokens[1].line == 1, "element 2 line");
-        AssertTrue(tokens[1].col == 5, "element 2 col");
+        BOOST_CHECK_EQUAL(tokens[1].type, token_type::string);
+        BOOST_CHECK_EQUAL(tokens[1].value, "5");
+        BOOST_CHECK_EQUAL(tokens[1].line, 1);
+        BOOST_CHECK_EQUAL(tokens[1].col, 5);
 
-        AssertTrue(tokens[2].type == token_type::number, "element 3 type");
-        AssertTrue(tokens[2].value == "6", "element 3 value");
-        AssertTrue(tokens[2].line == 1, "element 3 line");
-        AssertTrue(tokens[2].col == 9, "element 3 col");
+        BOOST_CHECK_EQUAL(tokens[2].type, token_type::number);
+        BOOST_CHECK_EQUAL(tokens[2].value, "6");
+        BOOST_CHECK_EQUAL(tokens[2].line, 1);
+        BOOST_CHECK_EQUAL(tokens[2].col, 9);
     }
-    {
+
+    BOOST_AUTO_TEST_CASE(case3) {
         tokenizer_config_t config;
         tokens_t tokens;
 
@@ -63,22 +74,23 @@ inline void test_can_tokenize_basic_function_calls() {
 
         tokenize(config, "foo '5' \"6\\n\"", tokens);
 
-        AssertTrue(tokens[0].type == token_type::atom, "element 1 type");
-        AssertTrue(tokens[0].value == "foo", "element 1 value");
-        AssertTrue(tokens[0].line == 1, "element 1 line");
-        AssertTrue(tokens[0].col == 1, "element 1 col");
+        BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[0].value, "foo");
+        BOOST_CHECK_EQUAL(tokens[0].line, 1);
+        BOOST_CHECK_EQUAL(tokens[0].col, 1);
 
-        AssertTrue(tokens[1].type == token_type::string, "element 2 type");
-        AssertTrue(tokens[1].value == "5", "element 2 value");
-        AssertTrue(tokens[1].line == 1, "element 2 line");
-        AssertTrue(tokens[1].col == 5, "element 2 col");
+        BOOST_CHECK_EQUAL(tokens[1].type, token_type::string);
+        BOOST_CHECK_EQUAL(tokens[1].value, "5");
+        BOOST_CHECK_EQUAL(tokens[1].line, 1);
+        BOOST_CHECK_EQUAL(tokens[1].col, 5);
 
-        AssertTrue(tokens[2].type == token_type::string, "element 3 type");
-        AssertTrue(tokens[2].value == "6\n", "element 3 value");
-        AssertTrue(tokens[2].line == 1, "element 3 line");
-        AssertTrue(tokens[2].col == 9, "element 3 col");
+        BOOST_CHECK_EQUAL(tokens[2].type, token_type::string);
+        BOOST_CHECK_EQUAL(tokens[2].value, "6\n");
+        BOOST_CHECK_EQUAL(tokens[2].line, 1);
+        BOOST_CHECK_EQUAL(tokens[2].col, 9);
     }
-    {
+
+    BOOST_AUTO_TEST_CASE(case4) {
         tokenizer_config_t config;
         tokens_t tokens;
 
@@ -86,25 +98,27 @@ inline void test_can_tokenize_basic_function_calls() {
 
         tokenize(config, "foo bar baz", tokens);
 
-        AssertTrue(tokens[0].type == token_type::atom, "element 1 type");
-        AssertTrue(tokens[0].value == "foo", "element 1 value");
-        AssertTrue(tokens[0].line == 1, "element 1 line");
-        AssertTrue(tokens[0].col == 1, "element 1 col");
+        BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[0].value, "foo");
+        BOOST_CHECK_EQUAL(tokens[0].line, 1);
+        BOOST_CHECK_EQUAL(tokens[0].col, 1);
 
-        AssertTrue(tokens[1].type == token_type::atom, "element 2 type");
-        AssertTrue(tokens[1].value == "bar", "element 2 value");
-        AssertTrue(tokens[1].line == 1, "element 2 line");
-        AssertTrue(tokens[1].col == 5, "element 2 col");
+        BOOST_CHECK_EQUAL(tokens[1].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[1].value, "bar");
+        BOOST_CHECK_EQUAL(tokens[1].line, 1);
+        BOOST_CHECK_EQUAL(tokens[1].col, 5);
 
-        AssertTrue(tokens[2].type == token_type::atom, "element 3 type");
-        AssertTrue(tokens[2].value == "baz", "element 3 value");
-        AssertTrue(tokens[2].line == 1, "element 3 line");
-        AssertTrue(tokens[2].col == 9, "element 3 col");
+        BOOST_CHECK_EQUAL(tokens[2].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[2].value, "baz");
+        BOOST_CHECK_EQUAL(tokens[2].line, 1);
+        BOOST_CHECK_EQUAL(tokens[2].col, 9);
     }
-}
 
-inline void test_can_tokenize_separated_symbols() {
-    {
+BOOST_AUTO_TEST_SUITE_END()
+
+
+BOOST_FIXTURE_TEST_SUITE(can_tokenize_separated_symbols_suite, config_and_tokens_init_fixture)
+    BOOST_AUTO_TEST_CASE(case1) {
         tokenizer_config_t config;
         tokens_t tokens;
 
@@ -112,27 +126,28 @@ inline void test_can_tokenize_separated_symbols() {
 
         tokenize(config, "foo 5+6", tokens);
 
-        AssertTrue(tokens[0].type == token_type::atom, "element 1 type");
-        AssertTrue(tokens[0].value == "foo", "element 1 value");
-        AssertTrue(tokens[0].line == 1, "element 1 line");
-        AssertTrue(tokens[0].col == 1, "element 1 col");
+        BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[0].value, "foo");
+        BOOST_CHECK_EQUAL(tokens[0].line, 1);
+        BOOST_CHECK_EQUAL(tokens[0].col, 1);
 
-        AssertTrue(tokens[1].type == token_type::number, "element 2 type");
-        AssertTrue(tokens[1].value == "5", "element 2 value");
-        AssertTrue(tokens[1].line == 1, "element 2 line");
-        AssertTrue(tokens[1].col == 5, "element 2 col");
+        BOOST_CHECK_EQUAL(tokens[1].type, token_type::number);
+        BOOST_CHECK_EQUAL(tokens[1].value, "5");
+        BOOST_CHECK_EQUAL(tokens[1].line, 1);
+        BOOST_CHECK_EQUAL(tokens[1].col, 5);
 
-        AssertTrue(tokens[2].type == token_type::atom, "element 3 type");
-        AssertTrue(tokens[2].value == "+", "element 3 value");
-        AssertTrue(tokens[2].line == 1, "element 3 line");
-        AssertTrue(tokens[2].col == 6, "element 3 col");
+        BOOST_CHECK_EQUAL(tokens[2].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[2].value, "+");
+        BOOST_CHECK_EQUAL(tokens[2].line, 1);
+        BOOST_CHECK_EQUAL(tokens[2].col, 6);
 
-        AssertTrue(tokens[3].type == token_type::number, "element 4 type");
-        AssertTrue(tokens[3].value == "6", "element 4 value");
-        AssertTrue(tokens[3].line == 1, "element 4 line");
-        AssertTrue(tokens[3].col == 7, "element 4 col");
+        BOOST_CHECK_EQUAL(tokens[3].type, token_type::number);
+        BOOST_CHECK_EQUAL(tokens[3].value, "6");
+        BOOST_CHECK_EQUAL(tokens[3].line, 1);
+        BOOST_CHECK_EQUAL(tokens[3].col, 7);
     }
-    {
+
+    BOOST_AUTO_TEST_CASE(case2) {
         tokenizer_config_t config;
         tokens_t tokens;
 
@@ -140,30 +155,25 @@ inline void test_can_tokenize_separated_symbols() {
 
         tokenize(config, "foo bar++6", tokens);
 
-        AssertTrue(tokens[0].type == token_type::atom, "element 1 type");
-        AssertTrue(tokens[0].value == "foo", "element 1 value");
-        AssertTrue(tokens[0].line == 1, "element 1 line");
-        AssertTrue(tokens[0].col == 1, "element 1 col");
+        BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[0].value, "foo");
+        BOOST_CHECK_EQUAL(tokens[0].line, 1);
+        BOOST_CHECK_EQUAL(tokens[0].col, 1);
 
-        AssertTrue(tokens[1].type == token_type::atom, "element 2 type");
-        AssertTrue(tokens[1].value == "bar", "element 2 value");
-        AssertTrue(tokens[1].line == 1, "element 2 line");
-        AssertTrue(tokens[1].col == 5, "element 2 col");
+        BOOST_CHECK_EQUAL(tokens[1].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[1].value, "bar");
+        BOOST_CHECK_EQUAL(tokens[1].line, 1);
+        BOOST_CHECK_EQUAL(tokens[1].col, 5);
 
-        AssertTrue(tokens[2].type == token_type::atom, "element 3 type");
-        AssertTrue(tokens[2].value == "++", "element 3 value");
-        AssertTrue(tokens[2].line == 1, "element 3 line");
-        AssertTrue(tokens[2].col == 8, "element 3 col");
+        BOOST_CHECK_EQUAL(tokens[2].type, token_type::atom);
+        BOOST_CHECK_EQUAL(tokens[2].value, "++");
+        BOOST_CHECK_EQUAL(tokens[2].line, 1);
+        BOOST_CHECK_EQUAL(tokens[2].col, 8);
 
-        AssertTrue(tokens[3].type == token_type::number, "element 4 type");
-        AssertTrue(tokens[3].value == "6", "element 4 value");
-        AssertTrue(tokens[3].line == 1, "element 4 line");
-        AssertTrue(tokens[3].col == 10, "element 4 col");
+        BOOST_CHECK_EQUAL(tokens[3].type, token_type::number);
+        BOOST_CHECK_EQUAL(tokens[3].value, "6");
+        BOOST_CHECK_EQUAL(tokens[3].line, 1);
+        BOOST_CHECK_EQUAL(tokens[3].col, 10);
     }
-}
 
-void run_lang_tokenizer_tests() {
-    TESTCASE
-    test_can_tokenize_basic_function_calls();
-    test_can_tokenize_separated_symbols();
-}
+BOOST_AUTO_TEST_SUITE_END()
