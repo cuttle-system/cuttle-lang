@@ -24,8 +24,6 @@ BOOST_FIXTURE_TEST_SUITE(can_tokenize_basic_function_calls_suite, config_and_tok
     BOOST_AUTO_TEST_CASE(case1) {
         tokenize(config, "foo 5 6", tokens);
 
-        std::cout << token_type::atom;
-
         BOOST_CHECK_EQUAL(tokens[0].type, token_type::atom);
         BOOST_CHECK_EQUAL(tokens[0].value, "foo");
         BOOST_CHECK_EQUAL(tokens[0].line, 1);
@@ -118,6 +116,7 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 BOOST_FIXTURE_TEST_SUITE(can_tokenize_separated_symbols_suite, config_and_tokens_init_fixture)
+
     BOOST_AUTO_TEST_CASE(case1) {
         tokenizer_config_t config;
         tokens_t tokens;
