@@ -4,6 +4,6 @@
 
 namespace cuttle {
     namespace lang {
-        void get_parser_cutc(cuttle::context_t& context);
+        void get_parser_cutc_tokenizer(cuttle::context_t& context);
     }
 }
