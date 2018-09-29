@@ -38,8 +38,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
 
                         {"c", value_type::func_name},
-                                {"0", value_type::number},
                                 {"3", value_type::number},
+                                {"0", value_type::number},
                                 {"array", value_type::func_name}
                 }};
         call_tree_t tree = {
@@ -55,7 +55,7 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
         BOOST_CHECK_EQUAL(state.output, "b s +\n"
                                         "b i 1\n"
                                         "b i 2\n"
-                                        "c 0 3 array");
+                                        "c 3 0 array");
     }
 
     BOOST_AUTO_TEST_CASE(case2) {
@@ -68,13 +68,13 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {"call", value_type::func_name},
                         {"b", value_type::func_name}, {"s", value_type::func_name}, {"foo", value_type::string},
                         {"c", value_type::func_name},
-                        {"0", value_type::number},
                         {"1", value_type::number},
+                        {"0", value_type::number},
                         {"array", value_type::func_name},
 
                         {"c", value_type::func_name},
-                        {"0", value_type::number},
                         {"3", value_type::number},
+                        {"0", value_type::number},
                         {"array", value_type::func_name}
                 }};
         call_tree_t tree = {
@@ -95,8 +95,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
         BOOST_CHECK_EQUAL(state.output, "b s +\n"
                                         "b i 1\n"
                                         "b s foo\n"
-                                        "c 0 1 array\n"
-                                        "c 0 3 array");
+                                        "c 1 0 array\n"
+                                        "c 3 0 array");
     }
 
     BOOST_AUTO_TEST_CASE(case3) {
@@ -114,20 +114,20 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"1", value_type::number},
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
                         {"c", value_type::func_name},
-                        {"0", value_type::number},
                         {"3", value_type::number},
+                        {"0", value_type::number},
                         {"array", value_type::func_name},
 
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"3", value_type::number},
 
                         {"c", value_type::func_name},
-                        {"0", value_type::number},
                         {"3", value_type::number},
+                        {"0", value_type::number},
                         {"array", value_type::func_name},
 
                         {"c", value_type::func_name},
-                        {"0", value_type::number},
                         {"3", value_type::number},
+                        {"0", value_type::number},
                         {"array", value_type::func_name}
                 }};
         call_tree_t tree = {
@@ -159,10 +159,10 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                                         "b s -\n"
                                         "b i 1\n"
                                         "b i 2\n"
-                                        "c 0 3 array\n"
+                                        "c 3 0 array\n"
                                         "b i 3\n"
-                                        "c 0 3 array\n"
-                                        "c 0 3 array");
+                                        "c 3 0 array\n"
+                                        "c 3 0 array");
     }
 
     BOOST_AUTO_TEST_CASE(case4) {
@@ -172,12 +172,12 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {"b", value_type::func_name}, {"s", value_type::func_name}, {"+", value_type::string},
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"1", value_type::number},
                         {"call", value_type::func_name},
-                        {"c", value_type::func_name}, {"0", value_type::number}, {"3", value_type::number}, {"array", value_type::func_name},
+                        {"c", value_type::func_name}, {"3", value_type::number}, {"0", value_type::number}, {"array", value_type::func_name},
 
                         {"b", value_type::func_name}, {"s", value_type::func_name}, {"-", value_type::string},
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
-                        {"c", value_type::func_name}, {"0", value_type::number}, {"3", value_type::number}, {"array", value_type::func_name}
+                        {"c", value_type::func_name}, {"3", value_type::number}, {"0", value_type::number}, {"array", value_type::func_name}
                 }};
         call_tree_t tree = {
                 {
@@ -200,8 +200,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                                         "b s -\n"
                                         "b i 2\n"
                                         "b i 2\n"
-                                        "c 0 3 array\n"
-                                        "c 0 3 array");
+                                        "c 3 0 array\n"
+                                        "c 3 0 array");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

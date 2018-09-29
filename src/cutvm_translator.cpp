@@ -69,8 +69,8 @@ void lang::get_cutvm_translator(translator_t &translator) {
 
             auto c_id = df::function_name(state, "c");
             args_indexes.push_back(df::function(state, c_id, {
-                    df::number(state, "0"),
                     df::number(state, std::to_string(args_indexes.size())),
+                    df::number(state, "0"),
                     df::function(state, df::function_name(state, "array"), {})
             }));
 

@@ -48,7 +48,7 @@ BOOST_FIXTURE_TEST_SUITE(can_translate_basic_function_calls_suite, cutvm_transla
                 {"b", value_type::func_name}, {"i", value_type::func_name}, {"1", value_type::number},
                 {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
 
-                {"c", value_type::func_name}, {"0", value_type::number}, {"3", value_type::number}, {"array", value_type::func_name}
+                {"c", value_type::func_name}, {"3", value_type::number}, {"0", value_type::number}, {"array", value_type::func_name}
         }));
     }
 
@@ -89,8 +89,8 @@ BOOST_FIXTURE_TEST_SUITE(can_translate_basic_function_calls_suite, cutvm_transla
                 {"b", value_type::func_name}, {"s", value_type::func_name}, {"-", value_type::string},
                 {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
                 {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
-                {"c", value_type::func_name}, {"0", value_type::number}, {"3", value_type::number}, {"array", value_type::func_name},
-                {"c", value_type::func_name}, {"0", value_type::number}, {"3", value_type::number}, {"array", value_type::func_name}
+                {"c", value_type::func_name}, {"3", value_type::number}, {"0", value_type::number}, {"array", value_type::func_name},
+                {"c", value_type::func_name}, {"3", value_type::number}, {"0", value_type::number}, {"array", value_type::func_name}
         }));
     }
 
