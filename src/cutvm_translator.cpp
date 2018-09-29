@@ -25,7 +25,7 @@ void lang::get_cutvm_translator(translator_t &translator) {
     initialize(translator.dictionary);
 
     add(translator.dictionary, call_tree_t{{{}, {0}}},
-        tokens_t{token{token_type::macro_pf, "_func"}},
+        tokens_t{token_t{token_type::macro_pf, "_func"}},
         [](translate_state_t &state) {
             namespace df = dictionary_funcs;
 
