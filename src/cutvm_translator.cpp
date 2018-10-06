@@ -4,21 +4,9 @@
 #include "dictionary_methods.hpp"
 #include "dictionary_funcs.hpp"
 #include "unsupported_cutvm_type_error.hpp"
+#include "cutvm_type_utils.hpp"
 
 using namespace cuttle;
-
-const char *cutvm_type_from_value_type(const value_type &value_type) {
-    switch (value_type) {
-        case value_type::func_name:
-            return "s";
-        case value_type::number:
-            return "i";
-        case value_type::string:
-            return "s";
-        default:
-            throw unsupported_cutvm_type_error(value_type);
-    }
-}
 
 void lang::get_cutvm_translator(translator_t &translator) {
     translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION}, {"cutvm", 1}, {}};

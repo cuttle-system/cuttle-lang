@@ -3,9 +3,9 @@
 #include <iostream>
 #include <boost/test/unit_test.hpp>
 #include <string>
-#include <unsupported_cutvm_type_error.hpp>
-#include <dictionary_methods.hpp>
-#include <dictionary_funcs.hpp>
+#include "unsupported_cutvm_type_error.hpp"
+#include "dictionary_methods.hpp"
+#include "dictionary_funcs.hpp"
 #include "translator_methods.hpp"
 #include "cutvm_translator.hpp"
 #include "value_methods.hpp"
@@ -22,7 +22,7 @@ struct cutvm_translator_init_fixture {
     }
 };
 
-BOOST_FIXTURE_TEST_SUITE(can_translate_basic_function_calls_suite, cutvm_translator_init_fixture)
+BOOST_FIXTURE_TEST_SUITE(cutvm_can_translate_basic_function_calls_suite, cutvm_translator_init_fixture)
 
     BOOST_AUTO_TEST_CASE(case1) {
         tokens_t tokens = {
