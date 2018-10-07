@@ -30,11 +30,13 @@ endif()
 add_dependency(cuttle-parser)
 add_dependency(cuttle-translator)
 add_dependency(cuttle-generator)
+add_dependency(cuttle-vm)
 
 include_directories(
         "../cuttle-parser/src"
         "../cuttle-translator/src"
-        "../cuttle-generator/src")
+        "../cuttle-generator/src"
+        "../cuttle-vm/src")
 
 add_subdirectory(src)
 add_subdirectory(tests)
