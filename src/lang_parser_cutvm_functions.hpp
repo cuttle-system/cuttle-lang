@@ -3,14 +3,14 @@
 #include "vm_context.hpp"
 #include "vm_value.hpp"
 
-#define PARSER_CONTEXT_CONFIG_ARRAY_DEFAULT_VALUES vm::value_t{PARSER_CONTEXT_CONFIG_TYPE, \
+#define PARSER_CONTEXT_CONFIG_ARRAY_DEFAULT_VALUES cuttle::vm::value_t{cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE, \
     { \
     vm_context.gc.add( \
-        new vm::array_t{ \
-            {{vm::type_id::string}, {vm_context.gc.add( new vm::string_t)}}, \
-            {{vm::type_id::integral}, {vm_context.gc.add( new vm::integral_t)}}, \
-            {{vm::type_id::integral}, {vm_context.gc.add( new vm::integral_t)}}, \
-            {{vm::type_id::integral}, {vm_context.gc.add( new vm::integral_t)}} \
+        new cuttle::vm::array_t{ \
+            {{cuttle::vm::type_id::string}, {vm_context.gc.add( new cuttle::vm::string_t)}}, \
+            {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t)}}, \
+            {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t)}}, \
+            {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t)}} \
         } \
     ) \
     }}
