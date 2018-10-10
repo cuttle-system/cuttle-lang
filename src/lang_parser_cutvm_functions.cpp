@@ -7,7 +7,7 @@
 using namespace cuttle::vm;
 
 int lang_parser_cutvm_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, cuttle::lang::PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+    array_t *config_array = get(context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE).data.array;
 
     value_t func_id = {args[0].type, {context.gc.add(new string_t{*args[0].data.string})}};
@@ -18,7 +18,7 @@ int lang_parser_cutvm_name_func(context_t &context, const std::vector<value_t> &
 }
 
 int lang_parser_cutvm_type_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, cuttle::lang::PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+    array_t *config_array = get(context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE).data.array;
 
     value_t func_id = {args[0].type, {context.gc.add(new integral_t{*args[0].data.integral})}};
@@ -53,7 +53,7 @@ int lang_parser_cutvm_postfix_func(context_t &context, const std::vector<value_t
 }
 
 int lang_parser_cutvm_args_number_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, cuttle::lang::PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+    array_t *config_array = get(context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE).data.array;
 
     value_t func_id = {args[0].type, {context.gc.add(new integral_t{*args[0].data.integral})}};
@@ -65,7 +65,7 @@ int lang_parser_cutvm_args_number_func(context_t &context, const std::vector<val
 
 
 int lang_parser_cutvm_priority_after_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, cuttle::lang::PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+    array_t *config_array = get(context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE).data.array;
 
     value_t func_id = {args[0].type, {context.gc.add(new integral_t{*args[0].data.integral})}};
@@ -84,7 +84,7 @@ int lang_parser_cutvm_start_func_id_func(context_t &context, const std::vector<v
 }
 
 int lang_parser_cutvm_func_id_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    auto *parser_context = (cuttle::context_t *) get(context, cuttle::lang::PARSER_CONTEXT_VAR_NAME,
+    auto *parser_context = (cuttle::context_t *) get(context, PARSER_CONTEXT_VAR_NAME,
                                                      {type_id::object}).data.object;
 
     ret = {{type_id::integral},
@@ -95,9 +95,9 @@ int lang_parser_cutvm_func_id_func(context_t &context, const std::vector<value_t
 }
 
 int lang_parser_cutvm_append_to_context_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, cuttle::lang::PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+    array_t *config_array = get(context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE).data.array;
-    auto *parser_context = (cuttle::context_t *) get(context, cuttle::lang::PARSER_CONTEXT_VAR_NAME,
+    auto *parser_context = (cuttle::context_t *) get(context, PARSER_CONTEXT_VAR_NAME,
                                                      {type_id::object}).data.object;
 
     auto func_name = *config_array->at(cuttle::lang::context_configuration_indexes::func_name_ind).data.string;
