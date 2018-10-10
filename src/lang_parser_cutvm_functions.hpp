@@ -18,7 +18,7 @@
 namespace cuttle {
     namespace lang {
         const char *PARSER_CONTEXT_VAR_NAME = "__cuttle_parser_context";
-        const char *PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME = "__parser_context_config_array";
+        const char *PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME = "__cuttle_parser_context_config_array";
         const vm::type_t PARSER_CONTEXT_CONFIG_TYPE = {vm::type_id::array, {
                 {vm::type_id::string},
                 {vm::type_id::integral}

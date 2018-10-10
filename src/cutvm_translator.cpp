@@ -9,7 +9,7 @@
 using namespace cuttle;
 
 void lang::get_cutvm_translator(translator_t &translator) {
-    translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION}, {"cutvm", 1}, {}};
+    translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION}, {"cutvm-cache", 1}, {}};
     initialize(translator.dictionary);
 
     add(translator.dictionary, call_tree_t{{{}, {0}}},

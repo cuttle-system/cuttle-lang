@@ -108,7 +108,8 @@ int lang_parser_cutvm_append_to_context_func(context_t &context, const std::vect
     auto priority_after = (cuttle::function_id_t) *config_array->at(
             cuttle::lang::context_configuration_indexes::priority_after_ind).data.integral;
 
-    cuttle::add(*parser_context, func_name, cuttle::function_t{func_type, args_number}, priority_after);
+    cuttle::context_t &parser_context_ref = *parser_context;
+    cuttle::add(parser_context_ref, func_name, cuttle::function_t{func_type, args_number}, priority_after);
 
     ret = value_t{{type_id::integral}, {context.gc.add(new integral_t {0})}};
     return 0;
