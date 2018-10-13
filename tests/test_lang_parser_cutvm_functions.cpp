@@ -32,7 +32,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
         auto parser_config_array = PARSER_CONTEXT_CONFIG_ARRAY_DEFAULT_VALUES;
         auto parser_context = vm::value_t{{vm::type_id::object},
                                           {&context}};
-        vm::add(vm_context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME, parser_config_array);
+        vm::add(vm_context, PARSER_CONTEXT_ARRAY_VAR_NAME, parser_config_array);
         vm::add(vm_context, PARSER_CONTEXT_VAR_NAME, parser_context);
         register_lang_parser_cutvm_functions(vm_context);
 
@@ -51,7 +51,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
             vm::eval(ss, vm_context, arg_stack);
         }
 
-        auto result_config = *vm::get(vm_context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+        auto result_config = *vm::get(vm_context, PARSER_CONTEXT_ARRAY_VAR_NAME,
                                       PARSER_CONTEXT_CONFIG_TYPE).data.array;
         auto result = (context_t *) vm::get(vm_context, PARSER_CONTEXT_VAR_NAME, {vm::type_id::object}).data.object;
 
@@ -75,7 +75,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
             auto parser_config_array = PARSER_CONTEXT_CONFIG_ARRAY_DEFAULT_VALUES;
             auto parser_context = vm::value_t{{vm::type_id::object},
                                               {&context}};
-            vm::add(vm_context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME, parser_config_array);
+            vm::add(vm_context, PARSER_CONTEXT_ARRAY_VAR_NAME, parser_config_array);
             vm::add(vm_context, PARSER_CONTEXT_VAR_NAME, parser_context);
             register_lang_parser_cutvm_functions(vm_context);
 
@@ -104,7 +104,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
                     vm::eval(ss, vm_context, arg_stack);
             }
 
-            auto result_config = *vm::get(vm_context, PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME,
+            auto result_config = *vm::get(vm_context, PARSER_CONTEXT_ARRAY_VAR_NAME,
                                           PARSER_CONTEXT_CONFIG_TYPE).data.array;
             auto result = (context_t *) vm::get(vm_context, PARSER_CONTEXT_VAR_NAME, {vm::type_id::object}).data.object;
 

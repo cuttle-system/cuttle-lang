@@ -16,7 +16,7 @@
     }}
 
 #define PARSER_CONTEXT_VAR_NAME "__cuttle_parser_context"
-#define PARSER_CONTEXT_CONFIG_ARRAY_VAR_NAME "__cuttle_parser_context_config_array"
+#define PARSER_CONTEXT_ARRAY_VAR_NAME "__cuttle_parser_context_config_array"
 
 namespace cuttle {
     namespace lang {
