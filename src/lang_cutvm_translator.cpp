@@ -98,7 +98,7 @@ void get_lang_cutvm_translator_base(translator_t &translator) {
 
 
 void lang::get_lang_cutvm_translator(translator_t &translator) {
-    translator = {{"cutl", TRANSLATOR_ANY_VERSION}, {"cutvm", 1}, {}};
+    translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION}, {"cutvm", 1}, {}};
     initialize(translator.dictionary);
 
     get_lang_cutvm_translator_base(translator);
