@@ -10,7 +10,7 @@
         new cuttle::vm::array_t{ \
             {{cuttle::vm::type_id::string}, {vm_context.gc.add( new cuttle::vm::string_t(""))}}, \
             {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t(cuttle::function_type::prefix))}}, \
-            {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t(0))}}, \
+            {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t(1))}}, \
             {{cuttle::vm::type_id::integral}, {vm_context.gc.add( new cuttle::vm::integral_t(FUNCTION_ID_UNKNOWN))}} \
         } \
     ) \

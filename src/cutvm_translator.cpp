@@ -105,6 +105,10 @@ tree_src_element_t cutvm_translator_translate(translate_state_t &state) {
     return call_id;
 }
 
+tree_src_element_t cutvm_translator_translate_value(translate_state_t &state) {
+    return cutvm_translator_present_value(state, state.index);
+}
+
 void lang::get_cutvm_translator(translator_t &translator) {
     translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION},
                   {"cutvm-cache",       1},
@@ -114,4 +118,7 @@ void lang::get_cutvm_translator(translator_t &translator) {
     add(translator.dictionary, call_tree_t{{{}, {0}}},
         tokens_t{token_t{token_type::macro_pf, "_func"}},
         cutvm_translator_translate);
+    add(translator.dictionary, call_tree_t{{{}, {0}}},
+        tokens_t{token_t{token_type::macro_p, "_a"}},
+        cutvm_translator_translate_value);
 }
