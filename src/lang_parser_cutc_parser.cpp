@@ -18,5 +18,5 @@ void lang::get_parser_cutc_parser(context_t &context) {
 
     add(context, "executes_before", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
     add(context, "func_id", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
-    add(context, "start_func_id", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
+    add(context, "last_func_id", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
 }

@@ -37,7 +37,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
         register_lang_parser_cutvm_functions(vm_context);
 
         std::stringstream ss(
-                "c 0 0 start_func_id\n"
+                "c 0 0 last_func_id\n"
                 "c 1 1 executes_before\n"
                 "b s foo\n"
                 "c 1 1 name\n"
@@ -80,7 +80,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
             register_lang_parser_cutvm_functions(vm_context);
 
             std::stringstream ss(
-                    "c 0 0 start_func_id\n"
+                    "c 0 0 last_func_id\n"
                     "c 1 1 executes_before\n"
                     "b s foo\n"
                     "c 1 1 name\n"

@@ -75,7 +75,7 @@ int lang_parser_cutvm_executes_before_func(context_t &context, const std::vector
     return 0;
 }
 
-int lang_parser_cutvm_start_func_id_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
+int lang_parser_cutvm_last_func_id_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
     ret = {{type_id::integral},
            {context.gc.add_r(
                    new integral_t(cuttle::FUNCTION_ID_UNKNOWN)
@@ -144,9 +144,9 @@ void cuttle::lang::register_lang_parser_cutvm_functions(vm::context_t &context) 
     executes_before.data.function = lang_parser_cutvm_executes_before_func;
     add(context, "executes_before", executes_before);
 
-    value_t start_func_id = {{type_id::function, {}}};
-    start_func_id.data.function = lang_parser_cutvm_start_func_id_func;
-    add(context, "start_func_id", start_func_id);
+    value_t last_func_id = {{type_id::function, {}}};
+    last_func_id.data.function = lang_parser_cutvm_last_func_id_func;
+    add(context, "last_func_id", last_func_id);
 
     value_t func_id = {{type_id::function, {{type_id::string}}}};
     func_id.data.function = lang_parser_cutvm_func_id_func;
