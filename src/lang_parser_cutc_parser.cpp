@@ -16,7 +16,7 @@ void lang::get_parser_cutc_parser(context_t &context) {
 
     add(context, "args_number", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
 
-    add(context, "priority_after", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
+    add(context, "executes_before", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
     add(context, "func_id", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
     add(context, "start_func_id", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
 }

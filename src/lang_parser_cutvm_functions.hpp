@@ -30,7 +30,7 @@ namespace cuttle {
             func_name_ind,
             type_ind,
             args_number_ind,
-            priority_after_ind
+            executes_before_ind
         };
 
         void register_lang_parser_cutvm_functions(vm::context_t &context);

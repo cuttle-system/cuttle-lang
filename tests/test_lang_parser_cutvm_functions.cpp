@@ -38,7 +38,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
 
         std::stringstream ss(
                 "c 0 0 start_func_id\n"
-                "c 1 1 priority_after\n"
+                "c 1 1 executes_before\n"
                 "b s foo\n"
                 "c 1 1 name\n"
                 "c 0 0 infix\n"
@@ -81,7 +81,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
 
             std::stringstream ss(
                     "c 0 0 start_func_id\n"
-                    "c 1 1 priority_after\n"
+                    "c 1 1 executes_before\n"
                     "b s foo\n"
                     "c 1 1 name\n"
                     "c 0 0 infix\n"
@@ -91,7 +91,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_cutvm_functions_suite, lang_parser_cutvm_fu
                     "c 0 0 append_to_context\n"
                     "b s foo\n"
                     "c 1 1 func_id\n"
-                    "c 1 1 priority_after\n"
+                    "c 1 1 executes_before\n"
                     "b s bar\n"
                     "c 1 1 name\n"
                     "c 0 0 prefix\n"

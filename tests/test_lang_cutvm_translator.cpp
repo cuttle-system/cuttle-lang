@@ -123,7 +123,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_function_calls_suite, l
 
     BOOST_AUTO_TEST_CASE(case2) {
         tokens_t tokens = {
-                {token_type::atom, "priority_after", 0, 0},
+                {token_type::atom, "executes_before", 0, 0},
                 {token_type::number, "5",              0, 0}
         };
         call_tree_t tree = {
@@ -144,7 +144,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_function_calls_suite, l
                 {1}
         }));
         BOOST_CHECK(values == (values_t{
-                {"priority_after", value_type::func_name},
+                {"executes_before", value_type::func_name},
                 {"call",           value_type::func_name},
                 {"b",              value_type::func_name},
                 {"i",              value_type::func_name},

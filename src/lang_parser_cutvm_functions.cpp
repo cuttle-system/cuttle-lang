@@ -64,12 +64,12 @@ int lang_parser_cutvm_args_number_func(context_t &context, const std::vector<val
 }
 
 
-int lang_parser_cutvm_priority_after_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
+int lang_parser_cutvm_executes_before_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
     array_t *config_array = get(context, PARSER_CONTEXT_ARRAY_VAR_NAME,
                                 cuttle::lang::PARSER_CONTEXT_CONFIG_TYPE).data.array;
 
     value_t func_id = {args[0].type, {context.gc.add(new integral_t{*args[0].data.integral})}};
-    config_array->at(cuttle::lang::context_configuration_indexes::priority_after_ind) = func_id;
+    config_array->at(cuttle::lang::context_configuration_indexes::executes_before_ind) = func_id;
 
     ret = args[0];
     return 0;
@@ -106,7 +106,7 @@ int lang_parser_cutvm_append_to_context_func(context_t &context, const std::vect
     auto args_number = (unsigned int) *config_array->at(
             cuttle::lang::context_configuration_indexes::args_number_ind).data.integral;
     auto priority_after = (cuttle::function_id_t) *config_array->at(
-            cuttle::lang::context_configuration_indexes::priority_after_ind).data.integral;
+            cuttle::lang::context_configuration_indexes::executes_before_ind).data.integral;
 
     cuttle::context_t &parser_context_ref = *parser_context;
     cuttle::add(parser_context_ref, func_name, cuttle::function_t{func_type, args_number}, priority_after);
@@ -140,9 +140,9 @@ void cuttle::lang::register_lang_parser_cutvm_functions(vm::context_t &context) 
     args_number.data.function = lang_parser_cutvm_args_number_func;
     add(context, "args_number", args_number);
 
-    value_t priority_after = {{type_id::function, {{type_id::integral}}}};
-    priority_after.data.function = lang_parser_cutvm_priority_after_func;
-    add(context, "priority_after", priority_after);
+    value_t executes_before = {{type_id::function, {{type_id::integral}}}};
+    executes_before.data.function = lang_parser_cutvm_executes_before_func;
+    add(context, "executes_before", executes_before);
 
     value_t start_func_id = {{type_id::function, {}}};
     start_func_id.data.function = lang_parser_cutvm_start_func_id_func;
