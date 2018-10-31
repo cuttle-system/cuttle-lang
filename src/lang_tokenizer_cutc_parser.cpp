@@ -17,7 +17,7 @@ void lang::get_tokenizer_cutc_parser(context_t &context) {
     add(context, "separated_symbol", function_t{ function_type::prefix, 1 }, 4);
     add(context, "macro_if", function_t{ function_type::prefix, 1 }, 4);
 
-    add(context, "formatted_characters", function_t{ function_type::prefix, 1 }, 4);
+    add(context, "formatted_character", function_t{ function_type::prefix, 1 }, 4);
 
     add(context, "separate_digit_and_alpha", function_t{ function_type::prefix, 1 }, 4);
 }
