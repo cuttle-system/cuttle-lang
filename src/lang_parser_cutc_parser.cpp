@@ -7,12 +7,15 @@ using namespace cuttle;
 void lang::get_parser_cutc_parser(context_t &context) {
     get_parser_base(context);
 
+    add(context, "->", function_t{ function_type::infix, 2 }, FUNCTION_ID_UNKNOWN);
     add(context, "name", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
 
     add(context, "type", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
     add(context, "prefix", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
     add(context, "infix", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
     add(context, "postfix", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
+    add(context, "postprefix", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
+    add(context, "postinfix", function_t{ function_type::prefix, 0 }, FUNCTION_ID_UNKNOWN);
 
     add(context, "args_number", function_t{ function_type::prefix, 1 }, FUNCTION_ID_UNKNOWN);
 

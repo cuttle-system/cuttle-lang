@@ -70,14 +70,6 @@ tree_src_element_t cutvm_translator_translate(translate_state_t &state) {
     }));
 
     args_indexes.push_back(cutvm_translator_present_value(state, state.index, true));
-//
-//    b_id = df::function_name(state, "b");
-//    s_id = df::function_name(state, "s");
-//    args_indexes.push_back(df::function(state, b_id, {
-//            df::function(state, s_id, {
-//                    df::value(state, state.tokens[state.index].value, value_type::string)
-//            })
-//    }));
 
     for (auto arg_index : state.tree.src[state.index]) {
         auto token_value_type = value_from_token_type(state.tokens[arg_index].type);
