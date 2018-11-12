@@ -20,10 +20,12 @@ tree_src_element_t cutvm_translator_present_value(translate_state_t &state, tree
         call_id = df::function_name(state, "call");
     }
 
+    token_t token = (index == CALL_TREE_SRC_NIL) ? token_t{token_type::atom, CUTTLE_CUTVM_CALL_TREE_NIL} : state.tokens[index];
+
     auto arg_b_type_id = df::function_name(state, "b");
     auto type_type_id = df::function_name(state, "s");
     std::stringstream type_cutvm_value;
-    type_cutvm_value << state.tokens[index].type;
+    type_cutvm_value << token.type;
     df::function(state, arg_b_type_id, {
             df::function(state, type_type_id, {
                     df::value(state, type_cutvm_value.str(), value_type::string)
@@ -34,7 +36,7 @@ tree_src_element_t cutvm_translator_present_value(translate_state_t &state, tree
     auto value_type_id = df::function_name(state, "s");
     df::function(state, arg_b_value_id, {
             df::function(state, value_type_id, {
-                    df::value(state, state.tokens[index].value, value_type::string)
+                    df::value(state, token.value, value_type::string)
             })
     });
 
@@ -72,16 +74,23 @@ tree_src_element_t cutvm_translator_translate(translate_state_t &state) {
     args_indexes.push_back(cutvm_translator_present_value(state, state.index, true));
 
     for (auto arg_index : state.tree.src[state.index]) {
-        auto token_value_type = value_from_token_type(state.tokens[arg_index].type);
+        value_type token_value_type;
+        if (arg_index == CALL_TREE_SRC_NIL) {
+            token_value_type = value_type::func_name;
+        } else {
+            token_value_type = value_from_token_type(state.tokens[arg_index].type);
+        }
         tree_src_element_t arg_b_id;
-        if (token_value_type != value_type::func_name) {
+        if (token_value_type != value_type::func_name || arg_index == CALL_TREE_SRC_NIL) {
             arg_b_id = cutvm_translator_present_value(state, arg_index);
         } else {
             translate_state_t child_state = state;
             child_state.index = arg_index;
             arg_b_id = translate_function_call(child_state);
         }
-        state.index_reference[arg_index] = arg_b_id;
+        if (arg_index != CALL_TREE_SRC_NIL) {
+            state.index_reference[arg_index] = arg_b_id;
+        }
         args_indexes.push_back(arg_b_id);
     }
 
