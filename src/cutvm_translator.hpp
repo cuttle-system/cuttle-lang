@@ -1,8 +1,7 @@
 #pragma once
 
 #include "translator.hpp"
-
-#define CUTTLE_CUTVM_CALL_TREE_NIL "__cuttle_call_tree_nil"
+#include "cutvm_translator_nil.hpp"
 
 namespace cuttle {
     namespace lang {

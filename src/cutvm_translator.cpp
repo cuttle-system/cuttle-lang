@@ -24,11 +24,9 @@ tree_src_element_t cutvm_translator_present_value(translate_state_t &state, tree
 
     auto arg_b_type_id = df::function_name(state, "b");
     auto type_type_id = df::function_name(state, "s");
-    std::stringstream type_cutvm_value;
-    type_cutvm_value << token.type;
     df::function(state, arg_b_type_id, {
             df::function(state, type_type_id, {
-                    df::value(state, type_cutvm_value.str(), value_type::string)
+                    df::value(state, token_type_to_string(token.type), value_type::string)
             })
     });
 

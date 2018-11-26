@@ -139,10 +139,10 @@ BOOST_FIXTURE_TEST_SUITE(lang_tokenizer_cutvm_functions_suite, lang_tokenizer_cu
 
         auto result = (tokenizer_config_t *) vm::get(vm_context, TOKENIZER_CONFIG_VAR_NAME, {vm::type_id::object}).data.object;
 
-        BOOST_CHECK_EQUAL(result->separated_symbols.size(), 2);
-        BOOST_CHECK_EQUAL(result->separated_symbols.count("+"), 1);
-        BOOST_CHECK_EQUAL(result->separated_symbols.count("-"), 1);
-        BOOST_CHECK_EQUAL(result->separated_symbols.count("not specified"), 0);
+        BOOST_CHECK_EQUAL(result->separated_symbols.size(), 2u);
+        BOOST_CHECK_EQUAL(result->separated_symbols.count("+"), 1u);
+        BOOST_CHECK_EQUAL(result->separated_symbols.count("-"), 1u);
+        BOOST_CHECK_EQUAL(result->separated_symbols.count("not specified"), 0u);
     }
 
 BOOST_AUTO_TEST_SUITE_END()
