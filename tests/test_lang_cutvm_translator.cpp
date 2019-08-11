@@ -33,7 +33,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_can_translate_basic_function_calls_suite, lang_cut
         call_tree_t tree = {
                 {
                         {}, {0, 2}, {}, {1}
-                }
+                }, {}
         };
         translate(translator, tokens, tree, values, new_tree);
         BOOST_CHECK(new_tree.src == (tree_src_t{
@@ -89,7 +89,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_function_calls_suite, l
         call_tree_t tree = {
                 {
                         {}, {0, 2}, {}, {1}
-                }
+                }, {}
         };
         translate(translator, tokens, tree, values, new_tree);
         BOOST_CHECK(new_tree.src == (tree_src_t{
@@ -129,7 +129,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_function_calls_suite, l
         call_tree_t tree = {
                 {
                         {1}, {}, {0}
-                }
+                }, {}
         };
         translate(translator, tokens, tree, values, new_tree);
         BOOST_CHECK(new_tree.src == (tree_src_t{

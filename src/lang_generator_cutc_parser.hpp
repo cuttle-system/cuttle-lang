@@ -4,6 +4,6 @@
 
 namespace cuttle {
     namespace lang {
-        void get_generator_func_cutc_parser(cuttle::context_t &context);
+        void get_generator_cutc_parser(cuttle::context_t &context);
     }
 }

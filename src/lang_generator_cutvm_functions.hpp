@@ -35,6 +35,6 @@ namespace cuttle {
             after_ind
         };
 
-        void register_lang_generator_func_cutvm_functions(vm::context_t &context);
+        void register_lang_generator_cutvm_functions(vm::context_t &context);
     }
 }

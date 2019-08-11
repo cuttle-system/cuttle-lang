@@ -2,13 +2,13 @@
 #include "generator_presenters_map_methods.hpp"
 #include "vm_context_methods.hpp"
 #include "vm_value_methods.hpp"
-#include "lang_generator_func_cutvm_functions.hpp"
+#include "lang_generator_cutvm_functions.hpp"
 #include "generator_config.hpp"
 #include "generator_presenters_methods.hpp"
 
 using namespace cuttle::vm;
 
-int lang_generator_func_cutvm_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
+int lang_generator_cutvm_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
     array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
 
@@ -19,7 +19,7 @@ int lang_generator_func_cutvm_name_func(context_t &context, const std::vector<va
     return 0;
 }
 
-int lang_generator_func_cutvm_before_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
+int lang_generator_cutvm_before_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
     array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
 
@@ -30,7 +30,7 @@ int lang_generator_func_cutvm_before_func(context_t &context, const std::vector<
     return 0;
 }
 
-int lang_generator_func_cutvm_after_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
+int lang_generator_cutvm_after_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
     array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
 
@@ -42,7 +42,7 @@ int lang_generator_func_cutvm_after_func(context_t &context, const std::vector<v
 }
 
 int
-lang_generator_func_cutvm_hide_function_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
+lang_generator_cutvm_hide_function_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
     array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
 
@@ -87,7 +87,7 @@ bool lang_generator_presenter_skip_func(int argi, bool is_func, cuttle::generato
     return params.skip[argi];
 }
 
-int lang_generator_func_cutvm_append_to_generator_config_func(context_t &context, const std::vector<value_t> &args,
+int lang_generator_cutvm_append_to_generator_config_func(context_t &context, const std::vector<value_t> &args,
                                                               value_t &ret) {
     array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
                                 cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
@@ -112,24 +112,24 @@ int lang_generator_func_cutvm_append_to_generator_config_func(context_t &context
     return 0;
 }
 
-void cuttle::lang::register_lang_generator_func_cutvm_functions(vm::context_t &context) {
+void cuttle::lang::register_lang_generator_cutvm_functions(vm::context_t &context) {
     value_t name = {{type_id::function, {{type_id::string}}}};
-    name.data.function = lang_generator_func_cutvm_name_func;
+    name.data.function = lang_generator_cutvm_name_func;
     add(context, "name", name);
 
     value_t before = {{type_id::function, {{type_id::string}}}};
-    before.data.function = lang_generator_func_cutvm_before_func;
+    before.data.function = lang_generator_cutvm_before_func;
     add(context, "before", before);
 
     value_t after = {{type_id::function, {{type_id::string}}}};
-    after.data.function = lang_generator_func_cutvm_after_func;
+    after.data.function = lang_generator_cutvm_after_func;
     add(context, "after", after);
 
     value_t hide_function_name = {{type_id::function, {{type_id::boolean}}}};
-    hide_function_name.data.function = lang_generator_func_cutvm_hide_function_name_func;
+    hide_function_name.data.function = lang_generator_cutvm_hide_function_name_func;
     add(context, "hide_function_name", hide_function_name);
 
     value_t append_to_generator_config = {{type_id::function, {}}};
-    append_to_generator_config.data.function = lang_generator_func_cutvm_append_to_generator_config_func;
+    append_to_generator_config.data.function = lang_generator_cutvm_append_to_generator_config_func;
     add(context, "append_to_generator_config", append_to_generator_config);
 }
