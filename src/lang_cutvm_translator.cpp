@@ -87,7 +87,7 @@ void get_lang_cutvm_translator_base(translator_t &translator) {
 //                                             df::function_name(state, state.tokens[function_index].value), state.tree.src[function_index]);
 //        });
     add(translator.dictionary, call_tree_t{{{}, {0}}},
-        tokens_t{token_t{token_type::macro_pf, "_func"}},
+        tokens_t{token_t{token_type::macro_pva, "_func"}},
         [](translate_state_t &state) {
             namespace df = dictionary_funcs;
             auto function_index = state.index;
@@ -100,24 +100,6 @@ void get_lang_cutvm_translator_base(translator_t &translator) {
 void lang::get_lang_cutvm_translator(translator_t &translator) {
     translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION}, {"cutvm", 1}, {}};
     initialize(translator.dictionary);
-
-    get_lang_cutvm_translator_base(translator);
-}
-
-
-void lang::get_lang_parser_cutvm_translator(translator_t &translator) {
-    translator = {{TRANSLATOR_ANY_NAME, TRANSLATOR_ANY_VERSION}, {"cutvm", 1}, {}};
-    initialize(translator.dictionary);
-
-//    add(translator.dictionary, call_tree_t{{{1}, {}, {0}}},
-//        tokens_t{token_t{token_type::atom, "priority_after"},
-//                 token_t{token_type::macro_p, "_func_id"}},
-//        [](translate_state_t &state) {
-//            namespace df = dictionary_funcs;
-//            auto function_index = state.index;
-//            return lang::cutvm_function_call(state,
-//                                             df::function_name(state, state.tokens[function_index].value), state.tree.src[function_index]);
-//        });
 
     get_lang_cutvm_translator_base(translator);
 }

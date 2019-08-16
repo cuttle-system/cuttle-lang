@@ -8,7 +8,7 @@
 
 using namespace cuttle;
 
-tree_src_element_t lang_generator_cutvm_rule_entry(translate_state_t &state) {
+tree_src_element_t lang_generator_cutvm_rule_entry(translate_state_t &state, bool hide_function_name = false) {
     namespace df = cuttle::dictionary_funcs;
 
     std::vector<tree_src_element_t> args_indexes;
@@ -27,28 +27,16 @@ tree_src_element_t lang_generator_cutvm_rule_entry(translate_state_t &state) {
     type_id = df::function_name(state,"s");
     args_indexes.push_back(df::function(state, arg_b_id, {
             df::function(state, type_id, {
-                    dictionary_funcs::parameter(state, "_before")
+                    dictionary_funcs::parameter(state, "_name")
             })
-    }));
-    c_id = df::function_name(state, "c");
-    args_indexes.push_back(df::function(state, c_id, {
-            df::number(state, "1"),
-            df::number(state, "1"),
-            df::function(state, df::function_name(state, "before"), {})
     }));
 
     arg_b_id = df::function_name(state, "b");
     type_id = df::function_name(state,"s");
     args_indexes.push_back(df::function(state, arg_b_id, {
             df::function(state, type_id, {
-                    dictionary_funcs::parameter(state, "_name")
+                    dictionary_funcs::parameter(state, "_before")
             })
-    }));
-    c_id = df::function_name(state, "c");
-    args_indexes.push_back(df::function(state, c_id, {
-            df::number(state, "1"),
-            df::number(state, "1"),
-            df::function(state, df::function_name(state, "name"), {})
     }));
 
     arg_b_id = df::function_name(state, "b");
@@ -58,11 +46,20 @@ tree_src_element_t lang_generator_cutvm_rule_entry(translate_state_t &state) {
                     dictionary_funcs::parameter(state, "_after")
             })
     }));
+
+    arg_b_id = df::function_name(state, "b");
+    type_id = df::function_name(state,"b");
+    args_indexes.push_back(df::function(state, arg_b_id, {
+            df::function(state, type_id, {
+                    df::string(state, hide_function_name ? "true" : "false")
+            })
+    }));
+
     c_id = df::function_name(state, "c");
     args_indexes.push_back(df::function(state, c_id, {
-            df::number(state, "1"),
-            df::number(state, "1"),
-            df::function(state, df::function_name(state, "after"), {})
+            df::number(state, "4"),
+            df::number(state, "4"),
+            df::function(state, df::function_name(state, "add_generator_config_rule"), {})
     }));
 
     df::function(state, call_id, args_indexes);
@@ -70,46 +67,38 @@ tree_src_element_t lang_generator_cutvm_rule_entry(translate_state_t &state) {
     return call_id;
 }
 
+tree_src_element_t lang_generator_cutvm_rule_entry_default(translate_state_t &state) {
+    return lang_generator_cutvm_rule_entry(state);
+}
+
+tree_src_element_t lang_generator_cutvm_rule_entry_hide_function_name(translate_state_t &state) {
+    return lang_generator_cutvm_rule_entry(state, true);
+}
+
 void lang::get_lang_generator_cutvm_translator(translator_t &translator) {
     translator = {{"cutc-generator", 1}, {"cutvm", 1}, {}};
     initialize(translator.dictionary);
 
-//    add(translator.dictionary, call_tree_t{{{1, 2}, {}, {}, {0}}},
-//        tokens_t{token_t{token_type::atom, "+"},
-//                 token_t{token_type::macro_p, "_a"},
-//                 token_t{token_type::macro_p, "_b"}},
-//        [](translate_state_t &state) {
-//            namespace df = dictionary_funcs;
-//            auto function_index = state.index;
-//            return lang::cutvm_function_call(state,
-//                                             df::function_name(state, state.tokens[function_index].value), state.tree.src[function_index]);
-//        });
-//    add(translator.dictionary, call_tree_t{{{1, 2}, {}, {}, {0}}},
-//        tokens_t{token_t{token_type::atom, "-"},
-//                 token_t{token_type::macro_p, "_a"},
-//                 token_t{token_type::macro_p, "_b"}},
-//        [](translate_state_t &state) {
-//            namespace df = dictionary_funcs;
-//            auto function_index = state.index;
-//            return lang::cutvm_function_call(state,
-//                                             df::function_name(state, state.tokens[function_index].value), state.tree.src[function_index]);
-//        });
-//    add(translator.dictionary, call_tree_t{{{1, 2}, {}, {}, {0}}},
-//        tokens_t{token_t{token_type::atom, "string"},
-//                 token_t{token_type::macro_p, "_a"}},
-//        [](translate_state_t &state) {
-//            namespace df = dictionary_funcs;
-//            auto function_index = state.index;
-//            return lang::cutvm_function_call(state,
-//                                             df::function_name(state, state.tokens[function_index].value), state.tree.src[function_index]);
-//        });
-    add(translator.dictionary, call_tree_t{{{}, {0, 3}, {}, {2, 4}, {}, {1}}, {}},
+    add(translator.dictionary, call_tree_t{{{}, {0, 3}, {}, {2, 4}, {}, {1}},
+                                           {}},
         tokens_t{
                 token_t{token_type::macro_p, "_before"},
                 token_t{token_type::atom, "->"},
                 token_t{token_type::macro_p, "_name"},
                 token_t{token_type::atom, "<-"},
                 token_t{token_type::macro_p, "_after"},
-            },
-        lang_generator_cutvm_rule_entry);
+        },
+        lang_generator_cutvm_rule_entry_default);
+
+
+    add(translator.dictionary, call_tree_t{{{}, {0, 4}, {3}, {}, {2, 5}, {}, {1}}, {}},
+        tokens_t{
+                token_t{token_type::macro_p, "_before"},
+                token_t{token_type::atom, "->"},
+                token_t{token_type::atom, "_"},
+                token_t{token_type::macro_p, "_name"},
+                token_t{token_type::atom, "<-"},
+                token_t{token_type::macro_p, "_after"},
+        },
+        lang_generator_cutvm_rule_entry_hide_function_name);
 }

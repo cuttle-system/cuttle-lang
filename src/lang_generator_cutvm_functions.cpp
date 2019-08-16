@@ -8,49 +8,6 @@
 
 using namespace cuttle::vm;
 
-int lang_generator_cutvm_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
-                                cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
-
-    value_t func_id = {args[0].type, {context.gc.add(new string_t{*args[0].data.string})}};
-    config_array->at(cuttle::lang::generator_config_configuration_indexes::func_name_ind) = func_id;
-
-    ret = args[0];
-    return 0;
-}
-
-int lang_generator_cutvm_before_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
-                                cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
-
-    value_t before = {args[0].type, {context.gc.add(new string_t{*args[0].data.string})}};
-    config_array->at(cuttle::lang::generator_config_configuration_indexes::before_ind) = before;
-
-    ret = args[0];
-    return 0;
-}
-
-int lang_generator_cutvm_after_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
-                                cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
-
-    value_t after = {args[0].type, {context.gc.add(new string_t{*args[0].data.string})}};
-    config_array->at(cuttle::lang::generator_config_configuration_indexes::after_ind) = after;
-
-    ret = args[0];
-    return 0;
-}
-
-int
-lang_generator_cutvm_hide_function_name_func(context_t &context, const std::vector<value_t> &args, value_t &ret) {
-    array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
-                                cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
-
-    value_t func_id = {args[0].type, {context.gc.add(new string_t{*args[0].data.string})}};
-    config_array->at(cuttle::lang::generator_config_configuration_indexes::hide_function_name_ind) = args[0];
-    return 0;
-}
-
 std::string lang_generator_presenter_before_func(int argi, bool is_func, cuttle::generator_presenter_params_t &params) {
     if (is_func) return params.before_func;
     if (params.before.count(argi) == 0) {
@@ -87,22 +44,16 @@ bool lang_generator_presenter_skip_func(int argi, bool is_func, cuttle::generato
     return params.skip[argi];
 }
 
-int lang_generator_cutvm_append_to_generator_config_func(context_t &context, const std::vector<value_t> &args,
+int lang_generator_cutvm_add_generator_config_rule_func(context_t &context, const std::vector<value_t> &args,
                                                               value_t &ret) {
-    array_t *config_array = get(context, GENERATOR_CONFIG_ARRAY_VAR_NAME,
-                                cuttle::lang::GENERATOR_CONFIG_TYPE).data.array;
-    auto *generator_config = (cuttle::generator_config_t *) get(context, GENERATOR_CONFIG_VAR_NAME,
-                                                                {type_id::object}).data.object;
+    auto func_name = *args[0].data.string;
+    auto before = *args[1].data.string;
+    auto after = *args[2].data.string;
+    bool hide_function_name = *args[3].data.boolean;
 
-    auto func_name = *config_array->at(cuttle::lang::generator_config_configuration_indexes::func_name_ind).data.string;
-    auto before = *config_array->at(cuttle::lang::generator_config_configuration_indexes::before_ind).data.string;
-    auto after = *config_array->at(cuttle::lang::generator_config_configuration_indexes::after_ind).data.string;
-    bool hide_function_name = *config_array->at(
-            cuttle::lang::generator_config_configuration_indexes::hide_function_name_ind).data.boolean;
-
-    cuttle::generator_config_t &generator_config_ref = *generator_config;
-    generator_config_ref.presenters_params[func_name] = {hide_function_name, before, after};
-    cuttle::add(generator_config_ref.presenters_map, func_name,
+    cuttle::generator_config_t generator_config;
+    generator_config.presenters_params[func_name] = {hide_function_name, before, after, {}, {}, {}};
+    cuttle::add(generator_config.presenters_map, func_name,
                 lang_generator_presenter_before_func,
                 lang_generator_presenter_after_func,
                 lang_generator_presenter_skip_func);
@@ -113,23 +64,8 @@ int lang_generator_cutvm_append_to_generator_config_func(context_t &context, con
 }
 
 void cuttle::lang::register_lang_generator_cutvm_functions(vm::context_t &context) {
-    value_t name = {{type_id::function, {{type_id::string}}}};
-    name.data.function = lang_generator_cutvm_name_func;
-    add(context, "name", name);
-
-    value_t before = {{type_id::function, {{type_id::string}}}};
-    before.data.function = lang_generator_cutvm_before_func;
-    add(context, "before", before);
-
-    value_t after = {{type_id::function, {{type_id::string}}}};
-    after.data.function = lang_generator_cutvm_after_func;
-    add(context, "after", after);
-
-    value_t hide_function_name = {{type_id::function, {{type_id::boolean}}}};
-    hide_function_name.data.function = lang_generator_cutvm_hide_function_name_func;
-    add(context, "hide_function_name", hide_function_name);
-
-    value_t append_to_generator_config = {{type_id::function, {}}};
-    append_to_generator_config.data.function = lang_generator_cutvm_append_to_generator_config_func;
-    add(context, "append_to_generator_config", append_to_generator_config);
+    value_t add_generator_config_rule = {{type_id::function, {
+        {type_id::string}, {type_id::string}, {type_id::string}, {type_id::boolean}}}};
+    add_generator_config_rule.data.function = lang_generator_cutvm_add_generator_config_rule_func;
+    add(context, "add_generator_config_rule", add_generator_config_rule);
 }

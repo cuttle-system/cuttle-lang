@@ -5,7 +5,6 @@
 namespace cuttle {
     namespace lang {
         void get_lang_cutvm_translator(translator_t &translator);
-        void get_lang_parser_cutvm_translator(translator_t &translator);
 
         tree_src_element_t cutvm_function_call(translate_state_t &state,
                                                tree_src_element_t function_name,
