@@ -39,7 +39,7 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_rules_suite, lang_parse
         };
         translate(translator, tokens, tree, values, new_tree);
         BOOST_CHECK(new_tree.src == (tree_src_t{
-                {1,  4,  7, 10, 13},
+                {1,  4,  7, 11, 18},
                 {2},
                 {3},
                 {},
@@ -49,10 +49,15 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_rules_suite, lang_parse
                 {8},
                 {9},
                 {},
-                {11},
-                {12},
                 {},
-                {14, 15, 16},
+                {12, 15},
+                {13},
+                {14},
+                {},
+                {16, 17, 10},
+                {},
+                {},
+                {19, 20, 21},
                 {},
                 {},
                 {},
@@ -69,9 +74,14 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_rules_suite, lang_parse
                 {"b",                      value_type::func_name},
                 {"i",                      value_type::func_name},
                 {"0",                      value_type::number},
+                {"before",                   value_type::func_name},
+                {"call",                   value_type::func_name},
                 {"b",                      value_type::func_name},
                 {"s",                      value_type::func_name},
                 {"return",                 value_type::string},
+                {"c",                      value_type::func_name},
+                {"1",                      value_type::number},
+                {"1",                      value_type::number},
                 {"c",                      value_type::func_name},
                 {"4",                      value_type::number},
                 {"4",                      value_type::number},
@@ -79,62 +89,275 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_rules_suite, lang_parse
         }));
     }
 
-//    BOOST_AUTO_TEST_CASE(case2) {
-//        tokens_t tokens = {
-//                {token_type::string, "",   0, 0},
-//                {token_type::atom,   "->", 0, 0},
-//                {token_type::atom,   "_",  0, 0},
-//                {token_type::string, ",",  0, 0},
-//                {token_type::atom,   "<-", 0, 0},
-//                {token_type::string, " ",  0, 0}
-//        };
-//        call_tree_t tree = {
-//                {
-//                        {}, {0, 4}, {3}, {}, {2, 5}, {}, {1}
-//                },
-//                {}
-//        };
-//        translate(translator, tokens, tree, values, new_tree);
-//        BOOST_CHECK(new_tree.src == (tree_src_t{
-//                {1,  4,  7, 10, 13},
-//                {2},
-//                {3},
-//                {},
-//                {5},
-//                {6},
-//                {},
-//                {8},
-//                {9},
-//                {},
-//                {11},
-//                {12},
-//                {},
-//                {14, 15, 16},
-//                {},
-//                {},
-//                {},
-//                {0}
-//        }));
-//        BOOST_CHECK(values == (values_t{
-//                {"call",                      value_type::func_name},
-//                {"b",                         value_type::func_name},
-//                {"s",                         value_type::func_name},
-//                {",",                         value_type::string},
-//                {"b",                         value_type::func_name},
-//                {"s",                         value_type::func_name},
-//                {"",                          value_type::string},
-//                {"b",                         value_type::func_name},
-//                {"s",                         value_type::func_name},
-//                {" ",                         value_type::string},
-//                {"b",                         value_type::func_name},
-//                {"b",                         value_type::func_name},
-//                {"true",                      value_type::string},
-//                {"c",                         value_type::func_name},
-//                {"4",                         value_type::number},
-//                {"4",                         value_type::number},
-//                {"add_generator_config_rule", value_type::func_name},
-//        }));
-//    }
+    BOOST_AUTO_TEST_CASE(case2) {
+        tokens_t tokens = {
+                {token_type::atom,   "prefix", 0, 0},
+                {token_type::string, ";",      0, 0},
+                {token_type::atom,   "root",   0, 0},
+        };
+        call_tree_t tree = {
+                {
+                        {1, 2}, {}, {}, {0}
+                },
+                {}
+        };
+        translate(translator, tokens, tree, values, new_tree);
+        BOOST_CHECK(new_tree.src == (tree_src_t{
+                {1,  4,  7, 11, 15},
+                {2},
+                {3},
+                {},
+                {5},
+                {6},
+                {},
+                {8},
+                {9},
+                {},
+                {},
+                {12},
+                {13, 14, 10},
+                {},
+                {},
+                {16, 17, 18},
+                {},
+                {},
+                {},
+                {0}
+        }));
+        BOOST_CHECK(values == (values_t{
+                {"call",                   value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {";",                      value_type::string},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"prefix",                 value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"i",                      value_type::func_name},
+                {"0",                      value_type::number},
+                {"root",                      value_type::func_name},
+                {"call",                   value_type::func_name},
+                {"c",                      value_type::func_name},
+                {"0",                      value_type::number},
+                {"0",                      value_type::number},
+                {"c",                      value_type::func_name},
+                {"4",                      value_type::number},
+                {"4",                      value_type::number},
+                {"add_parser_config_rule", value_type::func_name},
+        }));
+    }
+
+    BOOST_AUTO_TEST_CASE(case3) {
+        tokens_t tokens = {
+                {token_type::atom,   "prefix", 0, 0},
+                {token_type::string, ";",      0, 0},
+                {token_type::atom,   "..",     0, 0},
+                {token_type::number, "2",      0, 0},
+                {token_type::atom,   "root",   0, 0},
+        };
+        call_tree_t tree = {
+                {
+                        {1, 2, 4}, {}, {3}, {}, {}, {0}
+                },
+                {}
+        };
+        translate(translator, tokens, tree, values, new_tree);
+        BOOST_CHECK(new_tree.src == (tree_src_t{
+                {1,  4,  7, 11, 15},
+                {2},
+                {3},
+                {},
+                {5},
+                {6},
+                {},
+                {8},
+                {9},
+                {},
+                {},
+                {12},
+                {13, 14, 10},
+                {},
+                {},
+                {16, 17, 18},
+                {},
+                {},
+                {},
+                {0}
+        }));
+        BOOST_CHECK(values == (values_t{
+                {"call",                   value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {";",                      value_type::string},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"prefix",                 value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"i",                      value_type::func_name},
+                {"2",                      value_type::number},
+                {"root",                      value_type::func_name},
+                {"call",                   value_type::func_name},
+                {"c",                      value_type::func_name},
+                {"0",                      value_type::number},
+                {"0",                      value_type::number},
+                {"c",                      value_type::func_name},
+                {"4",                      value_type::number},
+                {"4",                      value_type::number},
+                {"add_parser_config_rule", value_type::func_name},
+        }));
+    }
+
+    BOOST_AUTO_TEST_CASE(case4) {
+        tokens_t tokens = {
+                {token_type::atom,   "prefix", 0, 0},
+                {token_type::string, ";",      0, 0},
+                {token_type::atom,   "..",     0, 0},
+                {token_type::number, "2",      0, 0},
+                {token_type::atom,   "before", 0, 0},
+                {token_type::string, "foo",    0, 0},
+        };
+        call_tree_t tree = {
+                {
+                        {1, 2, 4}, {}, {3}, {}, {5}, {}, {0}
+                },
+                {}
+        };
+        translate(translator, tokens, tree, values, new_tree);
+        BOOST_CHECK(new_tree.src == (tree_src_t{
+                {1,  4,  7, 11, 18},
+                {2},
+                {3},
+                {},
+                {5},
+                {6},
+                {},
+                {8},
+                {9},
+                {},
+                {},
+                {12, 15},
+                {13},
+                {14},
+                {},
+                {16, 17, 10},
+                {},
+                {},
+                {19, 20, 21},
+                {},
+                {},
+                {},
+                {0}
+        }));
+        BOOST_CHECK(values == (values_t{
+                {"call",                   value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {";",                      value_type::string},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"prefix",                 value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"i",                      value_type::func_name},
+                {"2",                      value_type::number},
+                {"before",                   value_type::func_name},
+                {"call",                   value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"foo",                 value_type::string},
+                {"c",                      value_type::func_name},
+                {"1",                      value_type::number},
+                {"1",                      value_type::number},
+                {"c",                      value_type::func_name},
+                {"4",                      value_type::number},
+                {"4",                      value_type::number},
+                {"add_parser_config_rule", value_type::func_name},
+        }));
+    }
+
+    BOOST_AUTO_TEST_CASE(case5) {
+        tokens_t tokens = {
+                {token_type::atom,   "postprefix", 0, 0},
+                {token_type::string, "(",          0, 0},
+                {token_type::atom,   "->",         0, 0},
+                {token_type::string, ")",          0, 0},
+                {token_type::atom,   "before",     0, 0},
+                {token_type::string, "foo",        0, 0},
+        };
+        call_tree_t tree = {
+                {
+                        {2, 4}, {}, {1, 3}, {}, {5}, {}, {0}
+                },
+                {}
+        };
+        translate(translator, tokens, tree, values, new_tree);
+        BOOST_CHECK(new_tree.src == (tree_src_t{
+                {2, 12, 15, 19, 26},
+                {},
+                {3, 6, 9},
+                {4},
+                {5},
+                {},
+                {7},
+                {8},
+                {},
+                {10, 11, 1},
+                {},
+                {},
+                {13},
+                {14},
+                {},
+                {16},
+                {17},
+                {},
+                {},
+                {20, 23},
+                {21},
+                {22},
+                {},
+                {24, 25, 18},
+                {},
+                {},
+                {27, 28, 29},
+                {},
+                {},
+                {},
+                {0}
+        }));
+        BOOST_CHECK(values == (values_t{
+                {"call",                   value_type::func_name},
+                {"->",                   value_type::func_name},
+                {"call",                   value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"(",                 value_type::string},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {")",                 value_type::string},
+                {"c",                      value_type::func_name},
+                {"2",                      value_type::number},
+                {"2",                      value_type::number},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"postprefix",                 value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"i",                      value_type::func_name},
+                {"0",                      value_type::number},
+                {"before",                   value_type::func_name},
+                {"call",                   value_type::func_name},
+                {"b",                      value_type::func_name},
+                {"s",                      value_type::func_name},
+                {"foo",                 value_type::string},
+                {"c",                      value_type::func_name},
+                {"1",                      value_type::number},
+                {"1",                      value_type::number},
+                {"c",                      value_type::func_name},
+                {"4",                      value_type::number},
+                {"4",                      value_type::number},
+                {"add_parser_config_rule", value_type::func_name},
+        }));
+    }
+
+// TODO: implement type system for translator functions (return type, argument types, e.g.)
 
 //    BOOST_AUTO_TEST_CASE(case3) {
 //        tokens_t tokens = {
@@ -175,41 +398,6 @@ BOOST_FIXTURE_TEST_SUITE(lang_parser_can_translate_basic_rules_suite, lang_parse
 //                {"c",    value_type::func_name},
 //                {"2",    value_type::number},
 //                {"2",    value_type::number}
-//        }));
-//    }
-//
-//    BOOST_AUTO_TEST_CASE(case4) {
-//        tokens_t tokens = {
-//                {token_type::atom,   "executes_before", 0, 0},
-//                {token_type::number, "5",               0, 0}
-//        };
-//        call_tree_t tree = {
-//                {
-//                        {1}, {}, {0}
-//                },
-//                {}
-//        };
-//        translate(translator, tokens, tree, values, new_tree);
-//        BOOST_CHECK(new_tree.src == (tree_src_t{
-//                {},
-//                {2, 5},
-//                {3},
-//                {4},
-//                {},
-//                {6, 7, 0},
-//                {},
-//                {},
-//                {1}
-//        }));
-//        BOOST_CHECK(values == (values_t{
-//                {"executes_before", value_type::func_name},
-//                {"call",            value_type::func_name},
-//                {"b",               value_type::func_name},
-//                {"i",               value_type::func_name},
-//                {"5",               value_type::number},
-//                {"c",               value_type::func_name},
-//                {"1",               value_type::number},
-//                {"1",               value_type::number}
 //        }));
 //    }
 

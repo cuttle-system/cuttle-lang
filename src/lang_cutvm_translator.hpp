@@ -10,5 +10,7 @@ namespace cuttle {
                                                tree_src_element_t function_name,
                                                const std::vector<tree_src_element_t> &initial_args_indexes
         );
+
+        tree_src_element_t cutvm_push_value_to_stack(translate_state_t &state);
     }
 }
