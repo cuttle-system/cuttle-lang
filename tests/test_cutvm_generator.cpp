@@ -38,9 +38,9 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {"b", value_type::func_name}, {"i", value_type::func_name}, {"2", value_type::number},
 
                         {"c", value_type::func_name},
-                                {"3", value_type::number},
-                                {"0", value_type::number},
-                                {"array", value_type::func_name}
+                        {"3", value_type::number},
+                        {"0", value_type::number},
+                        {"array", value_type::func_name}
                 }};
         call_tree_t tree = {
                 {
@@ -49,7 +49,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {5}, {6}, {},
                         {8}, {9}, {},
                         {11, 12, 13}, {}, {}, {}, {0}
-                }};
+                },
+                {}};
 
         generate(tokenizer_config, generator_config, context, values, tree, state);
         BOOST_CHECK_EQUAL(state.output, "b s +\n"
@@ -89,7 +90,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
 
                         {16, 17, 18}, {}, {}, {},
                         {0}
-                }};
+                },
+                {}};
 
         generate(tokenizer_config, generator_config, context, values, tree, state);
         BOOST_CHECK_EQUAL(state.output, "b s +\n"
@@ -150,7 +152,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
 
                         {33, 34, 35}, {}, {}, {},
                         {0}
-                }};
+                },
+                {}};
 
         generate(tokenizer_config, generator_config, context, values, tree, state);
         BOOST_CHECK_EQUAL(state.output, "b s +\n"
@@ -192,7 +195,8 @@ BOOST_FIXTURE_TEST_SUITE(generates_basic_cutvm_code_suite, cutvm_generator_init_
                         {19}, {20}, {},
                         {22, 23, 24}, {}, {}, {},
                         {0}
-                }};
+                },
+                {}};
 
         generate(tokenizer_config, generator_config, context, values, tree, state);
         BOOST_CHECK_EQUAL(state.output, "b s +\n"

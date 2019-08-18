@@ -27,12 +27,11 @@ tree_src_element_t lang_parser_cutvm_rule_entry(translate_state_t &state, bool w
 
     args_indexes.push_back(dictionary_funcs::parameter(state, "_name"));
 
-    arg_b_id = df::function_name(state, "b");
-    type_id = df::function_name(state,"s");
-    args_indexes.push_back(df::function(state, arg_b_id, {
-            df::function(state, type_id, {
-                    dictionary_funcs::function_name(state, state.tokens[state.index].value)
-            })
+    c_id = df::function_name(state, "c");
+    args_indexes.push_back(df::function(state, c_id, {
+            dictionary_funcs::number(state, "0"),
+            dictionary_funcs::number(state, "0"),
+            dictionary_funcs::function_name(state, state.tokens[state.index].value)
     }));
 
     if (with_args_number) {
